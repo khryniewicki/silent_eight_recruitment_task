@@ -8,24 +8,36 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 @Slf4j
 public class FileManager {
     private static final String path = "classpath*:/**/static/names/**/";
+    private static final String female_file = "female.txt";
+    private static final String male_file = "male.txt";
 
-    public static String read_file(String fileName) {
-        StringBuilder result = new StringBuilder();
+    public static boolean detect_token_from_file_with_female_names(String token) {
+        return detect_token(female_file, token);
+    }
 
-        try (InputStream is = resource_finder(fileName);
-             BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-             String line;
-            while ((line = br.readLine()) != null) {
-                log.info(line);
+    public static boolean detect_token_from_file_with_male_names(String token) {
+        return detect_token(male_file, token);
+    }
+
+    public static boolean detect_token(String fileName, String token) {
+        boolean isFound = false;
+        try (InputStream input = resource_finder(fileName);
+             BufferedReader br = new BufferedReader(new InputStreamReader(input))) {
+            String line;
+            while ((line = br.readLine()) != null && !isFound) {
+                if (token.toLowerCase().equals(line.toLowerCase())) {
+                    isFound = true;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return result.toString();
+        return isFound;
     }
 
 
