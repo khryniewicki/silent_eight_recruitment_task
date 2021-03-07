@@ -1,27 +1,38 @@
 package com.silenteight.gender_detection.services;
 
+import com.silenteight.gender_detection.api.response.AvailableTokensResponse;
 import com.silenteight.gender_detection.api.response.Gender;
-import com.silenteight.gender_detection.api.response.TokenResponse;
+import com.silenteight.gender_detection.api.response.GenderDetectionResponse;
 import com.silenteight.gender_detection.support.FileManager;
 import org.springframework.stereotype.Service;
 
-@Service
-public class GenderDetectionService {
+import java.util.Set;
 
-    public TokenResponse detect_gender(String name) {
-        String[] tokens = name.split(" ");
-        return new TokenResponse(first_token(tokens[0]), all_tokens(tokens));
+@Service
+public class TokensService implements ITokensService {
+
+    @Override
+    public AvailableTokensResponse prepare_set_with_tokens() {
+        Set<String> females = FileManager.get_set_with_tokens_from_file_with_female_names();
+        Set<String> males = FileManager.get_set_with_tokens_from_file_with_male_names();
+        return new AvailableTokensResponse(males, females);
     }
 
-    public String first_token(String name) {
+    @Override
+    public GenderDetectionResponse detect_gender(String name) {
+        String[] tokens = name.split(" ");
+        return new GenderDetectionResponse(first_token(tokens[0]), all_tokens(tokens));
+    }
+
+    protected String first_token(String name) {
         return verify_token(name).getName();
     }
 
-    public String all_tokens(String[] tokens) {
+    protected String all_tokens(String[] tokens) {
         return verify_tokens(tokens).getName();
     }
 
-    public Gender verify_tokens(String[] tokens) {
+    protected Gender verify_tokens(String[] tokens) {
         int female = 0;
         int male = 0;
 
@@ -44,7 +55,7 @@ public class GenderDetectionService {
     }
 
 
-    public Gender verify_token(String name) {
+    protected Gender verify_token(String name) {
         boolean isFemale = FileManager.detect_token_from_file_with_female_names(name);
         boolean isMale = FileManager.detect_token_from_file_with_male_names(name);
 

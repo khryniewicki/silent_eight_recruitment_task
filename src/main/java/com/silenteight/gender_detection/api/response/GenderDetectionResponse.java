@@ -7,11 +7,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class TokenResponse {
+public class GenderDetectionResponse {
     private String firstToken;
     private String allTokens;
 
-    public TokenResponse(String firstToken) {
-        this.firstToken = firstToken;
-    }
 }

@@ -1,11 +1,19 @@
 package com.silenteight.gender_detection.services;
 
+import com.silenteight.gender_detection.api.response.AvailableTokensResponse;
 import com.silenteight.gender_detection.api.response.Gender;
+import com.silenteight.gender_detection.api.response.GenderDetectionResponse;
 
-public class GenderDetectionSetup {
+import java.util.Set;
+
+public class TokensSerivceTestSetup {
     protected String name;
     protected String[] tokens;
     protected Gender gender;
+    protected AvailableTokensResponse availableTokensResponse;
+    protected GenderDetectionResponse genderDetectionResponse;
+    protected Set<String> females;
+    protected Set<String> males;
 
     protected String jan() {
         return "jan";
@@ -30,12 +38,15 @@ public class GenderDetectionSetup {
     protected String jan_marek_rokita() {
         return "Jan Marek Rokita";
     }
+
     protected String jan_maria_rokita() {
         return "Jan Maria Rokita";
     }
+
     protected String jan_maria_krzysztof() {
         return "Jan Maria Krzysztof";
     }
+
     protected String[] prepareTokens(String name) {
         return name.split(" ");
     }
