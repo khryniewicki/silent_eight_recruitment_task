@@ -18,7 +18,7 @@ public class FileManager {
 
         try (InputStream is = resource_finder(fileName);
              BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-            String line;
+             String line;
             while ((line = br.readLine()) != null) {
                 log.info(line);
             }
