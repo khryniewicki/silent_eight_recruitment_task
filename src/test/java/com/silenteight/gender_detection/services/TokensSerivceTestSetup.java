@@ -20,15 +20,12 @@ public class TokensSerivceTestSetup {
     protected String jan() {
         return "jan";
     }
-
     protected String anna() {
         return "anna";
     }
-
     protected String maria() {
         return "Maria";
     }
-
     protected String nemo() {
         return "nemo";
     }
@@ -36,32 +33,28 @@ public class TokensSerivceTestSetup {
     protected String anna_zbigniew_gertuda() {
         return "Anna Zbigniew Gertruda";
     }
-
     protected String jan_marek_rokita() {
         return "Jan Marek Rokita";
     }
-
-    protected String jan_maria_rokita() {
-        return "Jan Maria Rokita";
+    protected String jan_maria_rokita() { return "Jan Maria Rokita"; }
+    protected String bozymir_miroslaw_swietomir() {
+        return "Bożimir Miłosław Świętomir";
     }
-
     protected String jan_maria_krzysztof() {
         return "Jan Maria Krzysztof";
     }
-
-    protected String[] prepareTokens(String name) {
-        return name.split(" ");
-    }
-
     protected String aneta_grazyna_kamila() {
         return "Aneta Grażyna Kamila";
     }
-
     protected String konrad_robert_janusz() {
         return "Konrad Robert Janusz";
     }
+
     protected TokensRequest create_token_request(String name) {
         return new TokensRequest(name);
+    }
+    protected String[] prepare_tokens(String name) {
+        return name.split(" ");
     }
 
 }

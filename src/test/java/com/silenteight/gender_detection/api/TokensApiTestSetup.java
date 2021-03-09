@@ -10,8 +10,16 @@ import static io.restassured.RestAssured.given;
 public class TokensApiTestSetup {
     protected TokensRequest tokensRequest;
 
-    protected TokensRequest jan_kornel_waclaw(){
-        return new TokensRequest("Jan Kornel Wacław");
+    protected TokensRequest adam_kornel_waclaw(){
+        return new TokensRequest("Adam Kornel Wacław");
+    }
+
+    protected TokensRequest jan_maria_rokita(){
+        return new TokensRequest("Jan Maria Rokita");
+    }
+
+    protected TokensRequest anna_maria_jopek(){
+        return new TokensRequest("Anna Maria Jopek");
     }
 
     protected int status(String s) {

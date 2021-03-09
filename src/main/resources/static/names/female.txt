@@ -143,7 +143,8 @@ Dorota
 Dyzma
 Dżamila
 Dżesika
-Edeltrauda, Edeltruda
+Edeltrauda,
+Edeltruda
 Edyta
 Eleonora
 Eliza
@@ -362,7 +363,6 @@ Ludwika
 Ludwina
 Luiza
 Luna
-Lilianna
 Ładysława
 Łagoda
 Łucja

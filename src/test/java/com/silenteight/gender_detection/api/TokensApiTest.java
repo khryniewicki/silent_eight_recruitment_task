@@ -44,13 +44,13 @@ public class TokensApiTest extends TokensApiTestSetup {
         Set<String> females = availableTokensResponse.getFemales();
         Set<String> males = availableTokensResponse.getMales();
 
-        Assertions.assertEquals(621, females.size());
+        Assertions.assertEquals(622, females.size());
         Assertions.assertEquals(575, males.size());
     }
 
     @Test
-    public void should_return_gender_detection_response_when_detect_gender() {
-        tokensRequest = jan_kornel_waclaw();
+    public void should_return_gender_detection_response_with_male_first_token_and_male_all_tokens_when_detect_gender_with_name_jan_kornel_waclaw() {
+        tokensRequest = adam_kornel_waclaw();
 
         Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> status_post(tokensRequest, URI_GENDER_DETECTION) == 200);
         GenderDetectionResponse genderDetectionResponse = response_post(tokensRequest, URI_GENDER_DETECTION, HttpStatus.OK).as(GenderDetectionResponse.class);
@@ -60,8 +60,41 @@ public class TokensApiTest extends TokensApiTestSetup {
     }
 
     @Test
-    public void should_return_error_when_detect_gender_with_empty_body() {
+    public void should_return_gender_detection_response_with_male_first_token_and_inconclusive_all_tokens_when_detect_gender_with_name_jan_maria_rokita() {
+        tokensRequest = jan_maria_rokita();
+
+        Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> status_post(tokensRequest, URI_GENDER_DETECTION) == 200);
+        GenderDetectionResponse genderDetectionResponse = response_post(tokensRequest, URI_GENDER_DETECTION, HttpStatus.OK).as(GenderDetectionResponse.class);
+
+        Assertions.assertEquals(genderDetectionResponse.getFirstToken(), Gender.MALE.getName());
+        Assertions.assertEquals(genderDetectionResponse.getAllTokens(), Gender.INCONCLUSIVE.getName());
+    }
+
+    @Test
+    public void should_return_gender_detection_response_with_female_first_token_and_inconclusive_all_tokens_when_detect_gender_with_name_anna_maria_jopek() {
+        tokensRequest = anna_maria_jopek();
+
+        Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> status_post(tokensRequest, URI_GENDER_DETECTION) == 200);
+        GenderDetectionResponse genderDetectionResponse = response_post(tokensRequest, URI_GENDER_DETECTION, HttpStatus.OK).as(GenderDetectionResponse.class);
+
+        Assertions.assertEquals(genderDetectionResponse.getFirstToken(), Gender.FEMALE.getName());
+        Assertions.assertEquals(genderDetectionResponse.getAllTokens(), Gender.INCONCLUSIVE.getName());
+    }
+
+    @Test
+    public void should_return_error_when_detect_gender_with_no_body() {
         tokensRequest = new TokensRequest();
+
+        Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> status_post(tokensRequest, URI_GENDER_DETECTION) == 400);
+        Error error = response_post(tokensRequest, URI_GENDER_DETECTION, HttpStatus.BAD_REQUEST).as(Error.class);
+
+        Assertions.assertEquals(error.getStatus(), 400);
+        Assertions.assertEquals(error.getMessage().get(0), "Name must not be empty");
+    }
+
+    @Test
+    public void should_return_error_when_detect_gender_with_empty_body() {
+        tokensRequest = new TokensRequest("");
 
         Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> status_post(tokensRequest, URI_GENDER_DETECTION) == 400);
         Error error = response_post(tokensRequest, URI_GENDER_DETECTION, HttpStatus.BAD_REQUEST).as(Error.class);

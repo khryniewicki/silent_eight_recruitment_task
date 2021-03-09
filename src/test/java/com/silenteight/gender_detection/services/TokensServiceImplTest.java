@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Set;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {GenderDetectionApplication.class})
@@ -47,47 +46,54 @@ public class TokensServiceImplTest extends TokensSerivceTestSetup {
     }
     @Test
     public void should_return_female_when_verify_token_with_name_consisted_of_more_than_one_token() {
-        tokens = prepareTokens(anna_zbigniew_gertuda());
+        tokens = prepare_tokens(anna_zbigniew_gertuda());
         gender = genderDetectionService.verify_token(tokens[0]);
         Assertions.assertEquals(Gender.FEMALE, gender);
     }
     @Test
     public void should_return_female_when_verify_tokens_with_most_female_names() {
-        tokens = prepareTokens(anna_zbigniew_gertuda());
+        tokens = prepare_tokens(anna_zbigniew_gertuda());
         gender = genderDetectionService.verify_tokens(tokens);
         Assertions.assertEquals(Gender.FEMALE, gender);
     }
 
     @Test
     public void should_return_inconclusive_when_verify_tokens_with_not_recognized_token() {
-        tokens = prepareTokens(jan_marek_rokita());
+        tokens = prepare_tokens(jan_marek_rokita());
         gender = genderDetectionService.verify_tokens(tokens);
         Assertions.assertEquals(Gender.INCONCLUSIVE, gender);
     }
 
     @Test
     public void should_return_inconclusive_when_verify_tokens_with_no_unambiguous_token() {
-        tokens = prepareTokens(jan_maria_krzysztof());
+        tokens = prepare_tokens(jan_maria_krzysztof());
         gender = genderDetectionService.verify_tokens(tokens);
         Assertions.assertEquals(Gender.INCONCLUSIVE, gender);
     }
 
     @Test
     public void should_return_inconclusive_when_verify_tokens_with_no_unambiguous_and_not_recognized_token() {
-        tokens = prepareTokens(jan_maria_rokita());
+        tokens = prepare_tokens(jan_maria_rokita());
         gender = genderDetectionService.verify_tokens(tokens);
         Assertions.assertEquals(Gender.INCONCLUSIVE, gender);
+    }
+    @Test
+    public void should_return_male_when_verify_tokens_with_all_males_names_with_polish_characters() {
+        tokens = prepare_tokens(bozymir_miroslaw_swietomir());
+        gender = genderDetectionService.verify_tokens(tokens);
+        Assertions.assertEquals(Gender.MALE, gender);
     }
 
     @Test
     public void should_return_inconclusive_when_verify_tokens_with_all_female_tokens() {
-        tokens = prepareTokens(aneta_grazyna_kamila());
+        tokens = prepare_tokens(aneta_grazyna_kamila());
         gender = genderDetectionService.verify_tokens(tokens);
         Assertions.assertEquals(Gender.FEMALE, gender);
     }
+
     @Test
     public void should_return_inconclusive_when_verify_tokens_with_all_male_tokens() {
-        tokens = prepareTokens(konrad_robert_janusz());
+        tokens = prepare_tokens(konrad_robert_janusz());
         gender = genderDetectionService.verify_tokens(tokens);
         Assertions.assertEquals(Gender.MALE, gender);
     }
@@ -106,10 +112,10 @@ public class TokensServiceImplTest extends TokensSerivceTestSetup {
     public void should_return_set_with_available_tokens_when_prepare_set_with_tokens() {
         availableTokensResponse = genderDetectionService.prepare_set_with_tokens();
 
-        Set<String> females = availableTokensResponse.getFemales();
-        Set<String> males = availableTokensResponse.getMales();
+        females = availableTokensResponse.getFemales();
+        males = availableTokensResponse.getMales();
 
-        Assertions.assertEquals(621, females.size());
+        Assertions.assertEquals(622, females.size());
         Assertions.assertEquals(575, males.size());
     }
 }

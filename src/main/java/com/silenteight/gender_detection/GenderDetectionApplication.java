@@ -8,7 +8,6 @@ public class GenderDetectionApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(GenderDetectionApplication.class, args);
-
     }
 
 }
