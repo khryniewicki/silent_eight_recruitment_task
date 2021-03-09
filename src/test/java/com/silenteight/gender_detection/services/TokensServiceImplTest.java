@@ -13,10 +13,10 @@ import java.util.Set;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {GenderDetectionApplication.class})
-public class TokensServiceTest extends TokensSerivceTestSetup {
+public class TokensServiceImplTest extends TokensSerivceTestSetup {
 
     @Autowired
-    private TokensService genderDetectionService;
+    private TokensServiceImpl genderDetectionService;
 
     @Test
     public void should_return_male_when_verify_token_with_male_name() {
@@ -94,8 +94,10 @@ public class TokensServiceTest extends TokensSerivceTestSetup {
 
     @Test
     public void should_return_gender_detection_response_when_detect_gender() {
-        name = konrad_robert_janusz();
-        genderDetectionResponse = genderDetectionService.detect_gender(name);
+        tokensRequest = create_token_request(konrad_robert_janusz());
+
+        genderDetectionResponse = genderDetectionService.detect_gender(tokensRequest);
+
         Assertions.assertEquals(Gender.MALE.getName(), genderDetectionResponse.getFirstToken());
         Assertions.assertEquals(Gender.MALE.getName(), genderDetectionResponse.getAllTokens());
     }
@@ -103,8 +105,10 @@ public class TokensServiceTest extends TokensSerivceTestSetup {
     @Test
     public void should_return_set_with_available_tokens_when_prepare_set_with_tokens() {
         availableTokensResponse = genderDetectionService.prepare_set_with_tokens();
+
         Set<String> females = availableTokensResponse.getFemales();
         Set<String> males = availableTokensResponse.getMales();
+
         Assertions.assertEquals(621, females.size());
         Assertions.assertEquals(575, males.size());
     }

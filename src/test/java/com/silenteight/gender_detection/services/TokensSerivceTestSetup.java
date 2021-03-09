@@ -1,5 +1,6 @@
 package com.silenteight.gender_detection.services;
 
+import com.silenteight.gender_detection.api.request.TokensRequest;
 import com.silenteight.gender_detection.api.response.AvailableTokensResponse;
 import com.silenteight.gender_detection.api.response.Gender;
 import com.silenteight.gender_detection.api.response.GenderDetectionResponse;
@@ -12,6 +13,7 @@ public class TokensSerivceTestSetup {
     protected Gender gender;
     protected AvailableTokensResponse availableTokensResponse;
     protected GenderDetectionResponse genderDetectionResponse;
+    protected TokensRequest tokensRequest;
     protected Set<String> females;
     protected Set<String> males;
 
@@ -58,4 +60,8 @@ public class TokensSerivceTestSetup {
     protected String konrad_robert_janusz() {
         return "Konrad Robert Janusz";
     }
+    protected TokensRequest create_token_request(String name) {
+        return new TokensRequest(name);
+    }
+
 }
