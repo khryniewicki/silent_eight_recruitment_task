@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 public class TokensApiTest extends TokensApiTestSetup {
 
     public static final String URI_AVAILABLE_TOKENS = "/api/available-tokens";
-    public static final String URI_GENDER_DETECTION = "cd ";
+    public static final String URI_GENDER_DETECTION = "/api/gender-detection";
 
     @LocalServerPort
     int port;
